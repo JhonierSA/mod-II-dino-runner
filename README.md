@@ -1,2 +1,4 @@
-Author: Daniel Gomez Betancur
-Date: 02/03/2023
+Dinno Runner Game
+
+Author: Jhonier Santacruz
+Date: 04/03/2023
