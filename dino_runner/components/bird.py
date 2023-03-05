@@ -6,7 +6,7 @@ class Birds(Sprite):
     def __init__(self):
         self.image = BIRD[1]
         self.step = 0       
-        self.y_velocity = 10     
+        self.y_velocity = 20     
         self.bird_rect = self.image.get_rect()
         self.bird_rect_x = 1100
         self.bird_rect_y = 100

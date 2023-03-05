@@ -5,7 +5,7 @@ from pygame.sprite import Sprite
 class Shield(Sprite):
     def __init__(self):
         self.image = SHIELD   
-        self.y_velocity = 5     
+        self.y_velocity = 20     
         self.shield_rect = self.image.get_rect()
         self.shield_rect_x = 1100
         self.shield_rect_y = 100

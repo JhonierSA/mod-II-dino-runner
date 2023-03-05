@@ -5,7 +5,7 @@ from pygame.sprite import Sprite
 class Hammer(Sprite):
     def __init__(self):
         self.image = HAMMER  
-        self.y_velocity = 5     
+        self.y_velocity = 20    
         self.hammer_rect = self.image.get_rect()
         self.hammer_rect_x = 1100
         self.hammer_rect_y = 100
