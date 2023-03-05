@@ -4,8 +4,8 @@ from pygame.sprite import Sprite
 
 class Dinosaur(Sprite):
     def __init__(self):
-        self.image = JUMPING
-        self.is_jumping = False
+        self.image = JUMPING    # El estado inicial del dinosaurio al empezar el juego es similar al estado saltando.
+        self.is_jumping = False # Saber si el Dinosaurio esta saltando.
         self.jump_speed = 30    # Velocidad inicial de salto
         self.gravity = 2        # Gravedad aplicada.
         self.y_velocity = 0     # Velocidad actual.
@@ -71,6 +71,7 @@ class Dinosaur(Sprite):
         self.dino_rect_y = 310
 
     def jump(self):
+        self.dino_rect_y = 310
         if self.shield == True:
             self.image = JUMPING_SHIELD
         
