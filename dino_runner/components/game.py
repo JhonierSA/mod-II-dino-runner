@@ -1,6 +1,9 @@
 import pygame
+from dino_runner.components.cloud import Clouds
 from dino_runner.components.dinosaur import Dinosaur
 from dino_runner.components.bird import Birds
+from dino_runner.components.hammer import Hammer
+from dino_runner.components.shield import Shield
 
 from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS
 
@@ -18,6 +21,9 @@ class Game:
         self.y_pos_bg = 380
         self.player = Dinosaur()
         self.bird = Birds()
+        self.cloud = Clouds()
+        self.shield = Shield()
+        self.hammer = Hammer()
 
     def run(self):
         # Game loop: events - update - draw
@@ -37,6 +43,9 @@ class Game:
         user_input = pygame.key.get_pressed()
         self.player.update(user_input)
         self.bird.update()
+        self.cloud.update()
+        self.shield.update()
+        self.hammer.update()
 
     def draw(self):
         self.clock.tick(FPS)
@@ -44,6 +53,9 @@ class Game:
         self.draw_background()
         self.player.draw(self.screen)
         self.bird.draw(self.screen)
+        self.cloud.draw(self.screen)
+        self.shield.draw(self.screen)
+        self.hammer.draw(self.screen)
         pygame.display.update()
         pygame.display.flip()
 
