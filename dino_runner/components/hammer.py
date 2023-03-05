@@ -1,11 +1,11 @@
-from dino_runner.utils.constants import HAMMER
+from dino_runner.utils.constants import HAMMER, FPS
 import random
 from pygame.sprite import Sprite
 
 class Hammer(Sprite):
     def __init__(self):
         self.image = HAMMER  
-        self.y_velocity = 20    
+        self.y_velocity = FPS / (3/2)     
         self.hammer_rect = self.image.get_rect()
         self.hammer_rect_x = 1100
         self.hammer_rect_y = 100

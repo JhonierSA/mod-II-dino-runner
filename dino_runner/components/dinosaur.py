@@ -16,7 +16,6 @@ class Dinosaur(Sprite):
         self.dino_rect_y = 310
         self.step = 0
         self.die_Sound = pygame.mixer.Sound(os.path.join(IMG_DIR, 'Sounds/Die.mp3'))
-        self.points_Sound = pygame.mixer.Sound(os.path.join(IMG_DIR, 'Sounds/Points.mp3'))
 
     def update(self, user_input):
         if user_input[pygame.K_DOWN] or user_input[pygame.K_s]:

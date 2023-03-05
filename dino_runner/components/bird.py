@@ -1,4 +1,4 @@
-from dino_runner.utils.constants import BIRD
+from dino_runner.utils.constants import BIRD, FPS
 import random
 from pygame.sprite import Sprite
 
@@ -6,7 +6,7 @@ class Birds(Sprite):
     def __init__(self):
         self.image = BIRD[1]
         self.step = 0       
-        self.y_velocity = 20     
+        self.y_velocity = FPS / (3/2)   
         self.bird_rect = self.image.get_rect()
         self.bird_rect_x = 1100
         self.bird_rect_y = 100
