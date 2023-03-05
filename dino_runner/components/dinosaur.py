@@ -20,22 +20,32 @@ class Dinosaur(Sprite):
 
     def update(self, user_input):
         if user_input[pygame.K_DOWN] or user_input[pygame.K_s]:
-            self.duck()
-        
-        elif user_input[pygame.K_UP] or user_input[pygame.K_w] or user_input[pygame.K_SPACE]:
-            self.jump()
             if self.is_jumping:
-                # actualizar velocidad vertical del dinosaurio
-                self.y_velocity += self.gravity
-                # actualizar posición vertical del dinosaurio
+                self.y_velocity += self.gravity * 6
                 self.dino_rect_y += self.y_velocity
-
-                # si el dinosaurio llegó al suelo, detener el salto
                 if self.dino_rect_y >= 310:
                     self.dino_rect_y = 310
                     self.y_velocity = 0
                     self.is_jumping = False
-                    self.run()
+                    self.duck
+            else:
+                self.duck()
+        
+        elif (user_input[pygame.K_UP] or user_input[pygame.K_w] or user_input[pygame.K_SPACE]) and not self.is_jumping:
+            self.jump()
+        
+        elif self.is_jumping:
+            # actualizar velocidad vertical del dinosaurio
+            self.y_velocity += self.gravity
+            # actualizar posición vertical del dinosaurio
+            self.dino_rect_y += self.y_velocity
+
+            # si el dinosaurio llegó al suelo, detener el salto
+            if self.dino_rect_y >= 310:
+                self.dino_rect_y = 310
+                self.y_velocity = 0
+                self.is_jumping = False
+                self.run()
 
         else:
             self.run()
