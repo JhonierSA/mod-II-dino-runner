@@ -1,4 +1,5 @@
 import os
+import random
 import pygame
 from dino_runner.components.cloud import Clouds
 from dino_runner.components.dinosaur import Dinosaur
@@ -50,8 +51,7 @@ class Game:
 
     def update(self):
         user_input = pygame.key.get_pressed()
-        self.cactus.update()
-        self.bird.update()
+        self.obstacle().update()
         self.cloud.update()
         self.shield.update()
         self.hammer.update()
@@ -60,9 +60,8 @@ class Game:
     def draw(self):
         self.clock.tick(FPS + self.fps)
         self.screen.fill((255, 255, 255))
-        self.cactus.draw(self.screen)
+        self.obstacle().draw(self.screen)
         self.draw_background()
-        self.bird.draw(self.screen)
         self.cloud.draw(self.screen)
         self.shield.draw(self.screen)
         self.hammer.draw(self.screen)
@@ -84,9 +83,12 @@ class Game:
         self.obj_points += 1
         if self.obj_points % 10 == 0:   
             self.points += 1
-        if self.points % 100 == 0 and self.points > 0:
+        if self.obj_points % 1000 == 0 and self.points > 0:
             self.points_Sound.play()
             self.fps += 1
         font = pygame.font.Font('FreeSansBold.ttf', 20)
         self.text = font.render(f'Points:  {str(self.points)}', True, (0, 0, 0))
-        self.screen.blit(self.text, (950, 50))
+        self.screen.blit(self.text, (960, 10))
+    
+    def obstacle(self):
+        return random.choice((self.cactus, self.bird))
