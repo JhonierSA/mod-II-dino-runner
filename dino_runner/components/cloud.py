@@ -1,31 +1,49 @@
-from dino_runner.utils.constants import CLOUD
+from dino_runner.utils.constants import CLOUD, FPS
 import random
 from pygame.sprite import Sprite
 
 class Clouds(Sprite):
     def __init__(self):
-        self.image = CLOUD    
-        self.y_velocity = 3     
-        self.cloud_rect = self.image.get_rect()
-        self.cloud_rect_x = 1200
-        self.cloud_rect_y = 100
-        self.random_choise = True
-        
+        self.y_velocity = FPS / 100
+        self.clouds = []
+        self.num_clouds = 4
+        for cloud in range(self.num_clouds):
+            cloud = {}
+            cloud["image"] = CLOUD   
+            cloud["y_velocity"] = 3     
+            cloud["cloud_rect"] = cloud["image"].get_rect()
+            cloud["cloud_rect_x"] = 1200
+            cloud["cloud_rect_y"] = random.choice((170, 180, 190, 150, 160, 130, 100, 80))
+            cloud["distance_rect_y"] = random.choice((200, 300, 400, 500, 600, 700, 800, 900))
+            self.clouds.append(cloud)
+
     def update(self):
-        self.appear()
+        for cloud in self.clouds:    
+            self.appear()
 
     def draw(self, screen):
-        screen.blit(self.image, (self.cloud_rect_x, self.cloud_rect_y))
+        for cloud in self.clouds:
+            screen.blit(cloud["image"], (cloud["cloud_rect_x"], cloud["cloud_rect_y"]))
 
     def appear(self):
-        if self.random_choise:
-            self.cloud_rect_y = random.choice((170, 180, 190, 150, 160, 130, 100, 80)) 
-            self.random_choise = False
-        if self.cloud_rect_x <= -100:
-            self.cloud_rect_x = 1200
-            self.random_choise = True
-
-        self.image = CLOUD
-        self.cloud_rect = self.image.get_rect()
-        self.cloud_rect_x -= self.y_velocity
+        if self.clouds[3]["cloud_rect_x"] <= -100:
+            self.clouds = []
+            for cloud in range(self.num_clouds):
+                cloud = {}
+                cloud["image"] = CLOUD   
+                cloud["y_velocity"] = 3     
+                cloud["cloud_rect"] = cloud["image"].get_rect()
+                cloud["cloud_rect_x"] = 1200
+                cloud["cloud_rect_y"] = random.choice((170, 180, 190, 150, 160, 130, 100, 80))
+                cloud["distance_rect_y"] = random.choice((200, 300, 400, 500, 600, 700, 800, 900))
+                self.clouds.append(cloud)
+        
+        else:
+            for x in range(0,4):
+                if x >= 1:
+                    if self.clouds[x]["cloud_rect_x"] - self.clouds[x-1]["cloud_rect_x"] >= self.clouds[x-1]["distance_rect_y"]:
+                        self.clouds[x]["cloud_rect_x"] -= self.y_velocity
+                        self.clouds[0]["cloud_rect_x"] -= self.y_velocity
+                    else:
+                        self.clouds[0]["cloud_rect_x"] -= self.y_velocity
         
