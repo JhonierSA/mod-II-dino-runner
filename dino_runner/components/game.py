@@ -53,17 +53,17 @@ class Game:
 
     def update(self):
         user_input = pygame.key.get_pressed()
-        self.obstacle().update()
         self.cloud.update()
+        self.obstacle().update()
         self.upgrade().update()
         self.player.update(user_input)
 
     def draw(self):
         self.clock.tick(FPS + self.fps)
         self.screen.fill((255, 255, 255))
+        self.cloud.draw(self.screen)
         self.obstacle().draw(self.screen)
         self.draw_background()
-        self.cloud.draw(self.screen)
         self.upgrade().draw(self.screen)
         self.player.draw(self.screen)
         self.score()
@@ -113,3 +113,7 @@ class Game:
             return self.upgrading
         else:
             return self.upgrading
+    
+    def dead(self):
+        if self.player.rect.colliderect(self.obstacle()):
+            self.player.dead()

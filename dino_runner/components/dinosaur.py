@@ -100,3 +100,5 @@ class Dinosaur(Sprite):
         self.dino_rect_x = 80
         self.dino_rect_y = 345
     
+    def dead(self):
+        self.image = DEAD
