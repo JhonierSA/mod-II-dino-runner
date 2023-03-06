@@ -30,6 +30,8 @@ class Game:
         self.shield = Shield()
         self.hammer = Hammer()
         self.cactus = Cactus()
+        self.upgrading = random.choice((self.hammer, self.shield))
+        self.obsta = random.choice((self.cactus, self.bird))
         self.text = 0
         self.obj_points = 0
         self.points_Sound = pygame.mixer.Sound(os.path.join(IMG_DIR, 'Sounds/Points.mp3'))
@@ -53,8 +55,7 @@ class Game:
         user_input = pygame.key.get_pressed()
         self.obstacle().update()
         self.cloud.update()
-        self.shield.update()
-        self.hammer.update()
+        self.upgrade().update()
         self.player.update(user_input)
 
     def draw(self):
@@ -63,8 +64,7 @@ class Game:
         self.obstacle().draw(self.screen)
         self.draw_background()
         self.cloud.draw(self.screen)
-        self.shield.draw(self.screen)
-        self.hammer.draw(self.screen)
+        self.upgrade().draw(self.screen)
         self.player.draw(self.screen)
         self.score()
         pygame.display.update()
@@ -91,4 +91,25 @@ class Game:
         self.screen.blit(self.text, (960, 10))
     
     def obstacle(self):
-        return random.choice((self.cactus, self.bird))
+        if self.obsta == self.cactus:
+            if self.obsta.cactus_rect_x <= -100:
+                self.obsta = random.choice((self.cactus, self.bird))
+            return self.obsta
+        elif self.obsta == self.bird:
+            if self.obsta.bird_rect_x <= -100:
+                self.obsta = random.choice((self.cactus, self.bird))
+            return self.obsta
+        else:
+            return self.obsta
+    
+    def upgrade(self):
+        if self.upgrading == self.hammer:
+            if self.upgrading.hammer_rect_x <= -100:
+                self.upgrading = random.choice((self.hammer, self.shield))
+            return self.upgrading
+        elif self.upgrading == self.shield:
+            if self.upgrading.shield_rect_x <= -100:
+                self.upgrading = random.choice((self.hammer, self.shield))
+            return self.upgrading
+        else:
+            return self.upgrading

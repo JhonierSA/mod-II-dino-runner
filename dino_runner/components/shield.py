@@ -7,7 +7,7 @@ class Shield(Sprite):
         self.image = SHIELD   
         self.y_velocity = FPS / (3/2)      
         self.shield_rect = self.image.get_rect()
-        self.shield_rect_x = 1100
+        self.shield_rect_x = 1600
         self.shield_rect_y = 100
         self.random_choise = True
         
@@ -22,7 +22,7 @@ class Shield(Sprite):
             self.shield_rect_y = random.choice((190, 140, 210, 240, 280, 310)) 
             self.random_choise = False
         if self.shield_rect_x <= -100:
-            self.shield_rect_x = 1100
+            self.shield_rect_x = 1600
             self.random_choise = True
 
         self.image = SHIELD

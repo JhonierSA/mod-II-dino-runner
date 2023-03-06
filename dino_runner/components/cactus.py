@@ -7,7 +7,7 @@ class Cactus(Sprite):
         self.image = random.choice((LARGE_CACTUS[0], LARGE_CACTUS[1], LARGE_CACTUS[2], SMALL_CACTUS[0], SMALL_CACTUS[1], SMALL_CACTUS[2]))
         self.y_velocity = FPS / (3/2)     
         self.cactus_rect = self.image.get_rect()
-        self.cactus_rect_x = 1100
+        self.cactus_rect_x = 1200
         self.cactus_rect_y = 305 if self.image == LARGE_CACTUS[0] or self.image == LARGE_CACTUS[1] or self.image == LARGE_CACTUS[2] else 330
         self.random_choise = True
         
@@ -23,7 +23,7 @@ class Cactus(Sprite):
             self.cactus_rect_y = 305 if self.image == LARGE_CACTUS[0] or self.image == LARGE_CACTUS[1] or self.image == LARGE_CACTUS[2] else 330
             self.random_choise = False
         if self.cactus_rect_x <= -100:
-            self.cactus_rect_x = 1100
+            self.cactus_rect_x = 1200
             self.random_choise = True
 
         self.image = self.image

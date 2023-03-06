@@ -7,7 +7,7 @@ class Hammer(Sprite):
         self.image = HAMMER  
         self.y_velocity = FPS / (3/2)     
         self.hammer_rect = self.image.get_rect()
-        self.hammer_rect_x = 1100
+        self.hammer_rect_x = 1600
         self.hammer_rect_y = 100
         self.random_choise = True
         
@@ -22,7 +22,7 @@ class Hammer(Sprite):
             self.hammer_rect_y = random.choice((190, 140, 210, 240, 280, 310)) 
             self.random_choise = False
         if self.hammer_rect_x <= -100:
-            self.hammer_rect_x = 1100
+            self.hammer_rect_x = 1600
             self.random_choise = True
 
         self.image = HAMMER
