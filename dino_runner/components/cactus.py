@@ -1,3 +1,4 @@
+import pygame
 from dino_runner.utils.constants import LARGE_CACTUS, SMALL_CACTUS, FPS
 import random
 from pygame.sprite import Sprite
@@ -10,6 +11,7 @@ class Cactus(Sprite):
         self.cactus_rect_x = 1200
         self.cactus_rect_y = 305 if self.image == LARGE_CACTUS[0] or self.image == LARGE_CACTUS[1] or self.image == LARGE_CACTUS[2] else 330
         self.random_choise = True
+        self.rect = pygame.Rect(self.cactus_rect_x, self.cactus_rect_y, self.image.get_width(), self.image.get_height())
         
     def update(self):
         self.appear()

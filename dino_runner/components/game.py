@@ -43,6 +43,7 @@ class Game:
             self.events()
             self.update()
             self.draw()
+            self.game_over()
             self.score()
         pygame.quit()
 
@@ -114,6 +115,8 @@ class Game:
         else:
             return self.upgrading
     
-    def dead(self):
-        if self.player.rect.colliderect(self.obstacle()):
+    def game_over(self):
+        if self.player.rect.colliderect(self.obstacle().rect):
             self.player.dead()
+            print("Game Over")
+            self.playing = False

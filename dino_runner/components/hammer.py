@@ -1,3 +1,4 @@
+import pygame
 from dino_runner.utils.constants import HAMMER, FPS
 import random
 from pygame.sprite import Sprite
@@ -10,7 +11,8 @@ class Hammer(Sprite):
         self.hammer_rect_x = 10000
         self.hammer_rect_y = 100
         self.random_choise = True
-        
+        self.rect = pygame.Rect(self.hammer_rect_x, self.hammer_rect_y, self.image.get_width(), self.image.get_height())
+
     def update(self):
         self.appear()
 

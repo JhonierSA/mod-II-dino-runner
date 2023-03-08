@@ -15,6 +15,7 @@ class Dinosaur(Sprite):
         self.dino_rect_x = 80
         self.dino_rect_y = 310
         self.step = 0
+        self.rect = pygame.Rect(self.dino_rect_x, self.dino_rect_y, self.image.get_width(), self.image.get_height())
         self.die_Sound = pygame.mixer.Sound(os.path.join(IMG_DIR, 'Sounds/Die.mp3'))
 
     def update(self, user_input):

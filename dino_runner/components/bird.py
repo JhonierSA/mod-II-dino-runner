@@ -1,3 +1,4 @@
+import pygame
 from dino_runner.utils.constants import BIRD, FPS
 import random
 from pygame.sprite import Sprite
@@ -11,6 +12,7 @@ class Birds(Sprite):
         self.bird_rect_x = 1200
         self.bird_rect_y = 100
         self.random_choise = True
+        self.rect = pygame.Rect(self.bird_rect_x, self.bird_rect_y, self.image.get_width(), self.image.get_height())
         
     def update(self):
         self.fly()
