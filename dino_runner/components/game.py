@@ -130,7 +130,10 @@ class Game:
             self.player.hammer = False
             self.player.shield = True
         elif self.upgrade() == self.heart:
-            self.player.lifes += 1
+            if self.player.lifes < 3:
+                self.player.lifes += 1
+            else:
+                pass
     
     def dead(self):
         if self.player_rect.colliderect(self.obsta_rect):

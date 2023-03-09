@@ -11,11 +11,12 @@ class Dinosaur(Sprite):
         self.y_velocity = 0     # Velocidad actual.
         self.shield = False
         self.hammer = False
+        self.img_heart = HEARTS[0]
         self.dino_rect = self.image.get_rect()
         self.dino_rect_x = 80
         self.dino_rect_y = 310
         self.step = 0
-        self.lifes = 0
+        self.lifes = 1
 
     def update(self, user_input):
         if user_input[pygame.K_DOWN] or user_input[pygame.K_s]:
@@ -53,6 +54,7 @@ class Dinosaur(Sprite):
             self.step = 0
 
     def draw(self, screen):
+        screen.blit(self.heart(), (0, 0))
         screen.blit(self.image, (self.dino_rect_x, self.dino_rect_y))
 
     def run(self):
@@ -104,3 +106,14 @@ class Dinosaur(Sprite):
         if self.dino_rect_y == 345:
             self.dino_rect_y = 310
         self.image = DEAD
+    
+    def heart(self):
+        if self.lifes == 2:
+            self.img_heart = HEARTS[1]
+            return self.img_heart
+        elif self.lifes == 3:
+            self.img_heart = HEARTS[2]
+            return self.img_heart
+        else:
+            self.img_heart = HEARTS[0]
+            return self.img_heart
