@@ -11,6 +11,7 @@ class Dinosaur(Sprite):
         self.y_velocity = 0     # Velocidad actual.
         self.shield = False
         self.hammer = False
+        self.bat = False
         self.img_heart = HEARTS[0]
         self.dino_rect = self.image.get_rect()
         self.dino_rect_x = 80
@@ -63,6 +64,9 @@ class Dinosaur(Sprite):
         
         elif self.hammer == True:
             self.image = RUNNING_HAMMER[0] if self.step < 4 else RUNNING_HAMMER[1]
+        
+        elif self.bat == True:
+            self.image = RUNNING_BAT[0] if self.step < 4 else RUNNING_BAT[1]
 
         else:
             self.image = RUNNING[0] if self.step < 4 else RUNNING[1]

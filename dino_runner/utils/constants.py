@@ -26,6 +26,11 @@ RUNNING_HAMMER = [
     pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoRun2Hammer.png")),
 ]
 
+RUNNING_BAT = [
+    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoRun1Bat.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoRun2Bat.png")),
+]
+
 JUMPING = pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoJump.png"))
 JUMPING_SHIELD = pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoJumpShield.png"))
 JUMPING_HAMMER = pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoJumpHammer.png"))
@@ -73,6 +78,7 @@ CLOUD = pygame.image.load(os.path.join(IMG_DIR, 'Other/Cloud.png'))
 SHIELD = pygame.image.load(os.path.join(IMG_DIR, 'Other/shield.png'))
 HAMMER = pygame.image.load(os.path.join(IMG_DIR, 'Other/hammer.png'))
 SMALL_HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
+BAT = pygame.image.load(os.path.join(IMG_DIR, 'Other/Bat.png'))
 
 BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/Track.png'))
 

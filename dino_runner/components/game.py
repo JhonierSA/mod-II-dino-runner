@@ -1,6 +1,7 @@
 import os
 import random
 import pygame
+from dino_runner.components.bat import Bat
 from dino_runner.components.cloud import Clouds
 from dino_runner.components.dinosaur import Dinosaur
 from dino_runner.components.bird import Birds
@@ -34,7 +35,8 @@ class Game:
         self.hammer = Hammer()
         self.cactus = Cactus()
         self.heart = Heart()
-        self.upgrading = random.choice((self.hammer, self.shield, self.heart))
+        self.bat = Bat()
+        self.upgrading = random.choice((self.hammer, self.shield, self.heart, self.bat))
         self.obsta = random.choice((self.cactus, self.bird))
         self.text = 0
         self.font = pygame.font.Font('FreeSansBold.ttf', 20)
@@ -117,7 +119,7 @@ class Game:
     
     def upgrade(self):
         if self.upgrading.rect_x <= -100:
-            self.upgrading = random.choice((self.hammer, self.shield, self.heart))
+            self.upgrading = random.choice((self.hammer, self.shield, self.heart, self.bat))
             return self.upgrading
         else: 
             return self.upgrading
@@ -125,10 +127,16 @@ class Game:
     def power_up(self):
         if self.upgrade() == self.hammer:
             self.player.shield = False
+            self.player.bat = False
             self.player.hammer = True
         elif self.upgrade() == self.shield:
             self.player.hammer = False
+            self.player.bat = False
             self.player.shield = True
+        elif self.upgrade() == self.bat:
+            self.player.hammer = False
+            self.player.shield = False
+            self.player.bat = True
         elif self.upgrade() == self.heart:
             if self.player.lifes < 3:
                 self.player.lifes += 1
@@ -140,6 +148,8 @@ class Game:
             if self.player.shield == True:
                 print("Te has protegido")
                 self.player.shield = False
+            elif self.player.lifes > 1:
+                self.player.lifes -= 1
             else:
                 pygame.mixer.Sound(os.path.join(IMG_DIR, 'Sounds/Die.mp3')).play()
                 if self.player_died:
@@ -202,7 +212,7 @@ class Game:
         self.hammer = Hammer()
         self.cactus = Cactus()
         self.heart = Heart()
-        self.upgrading = random.choice((self.hammer, self.shield, self.heart))
+        self.upgrading = random.choice((self.hammer, self.shield, self.heart, self.bat))
         self.obsta = random.choice((self.cactus, self.bird))
         self.text = 0
         self.font = pygame.font.Font('FreeSansBold.ttf', 20)
