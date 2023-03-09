@@ -37,12 +37,16 @@ class Game:
         self.upgrading = random.choice((self.hammer, self.shield, self.heart))
         self.obsta = random.choice((self.cactus, self.bird))
         self.text = 0
+        self.font = pygame.font.Font('FreeSansBold.ttf', 20)
         self.obj_points = 0
         self.points_Sound = pygame.mixer.Sound(os.path.join(IMG_DIR, 'Sounds/Points.mp3'))
         self.obsta_rect = pygame.Rect(self.obstacle().rect_x, self.obstacle().rect_y, self.obstacle().image.get_width(), self.obstacle().image.get_height())
         self.player_rect = pygame.Rect(self.player.dino_rect_x, self.player.dino_rect_y, self.player.image.get_width(), self.player.image.get_height())
         self.upgrade_rect = pygame.Rect(self.upgrade().rect_x, self.upgrade().rect_y, self.upgrade().image.get_width(), self.upgrade().image.get_height())
 
+    def start(self):
+        self.show_start_menu()
+    
     def run(self):
         # Game loop: events - update - draw
         self.playing = True
@@ -69,6 +73,7 @@ class Game:
         self.upgrade_rect = pygame.Rect(self.upgrade().rect_x, self.upgrade().rect_y, self.upgrade().image.get_width(), self.upgrade().image.get_height())
         
     def draw(self):
+        self.show_dead_menu()
         self.dead()
         if self.player_rect.colliderect(self.upgrade_rect):
             self.upgrade().rect_x = -100
@@ -101,8 +106,7 @@ class Game:
         if self.obj_points % 1000 == 0 and self.points > 0:
             self.points_Sound.play()
             self.fps += 1
-        font = pygame.font.Font('FreeSansBold.ttf', 20)
-        self.text = font.render(f'Points:  {str(self.points)}', True, (0, 0, 0))
+        self.text = self.font.render(f'Points:  {str(self.points)}', True, (0, 0, 0))
         self.screen.blit(self.text, (960, 10))
     
     def obstacle(self):
@@ -135,7 +139,41 @@ class Game:
                 print("Te has protegido")
                 self.player.shield = False
             else:
-                self.player.dead()
+                if self.player_died:
+                    self.player.dead()
                 self.player_died = True
                 self.died_count += 1
+                self.player.draw(self.screen)
     
+    def show_start_menu(self):
+        image = ICON
+        self.screen.fill((255, 255, 255))
+        label = self.font.render("Press any key to start", 1, (0, 0, 0))
+        self.screen.blit(label, (self.screen.get_width()/2 - label.get_width()/2, 
+                            self.screen.get_height()/2+80 - label.get_height()/2))
+        self.screen.blit(image, (self.screen.get_width()/2 - image.get_width()/2, 
+                            self.screen.get_height()/2 - image.get_height()/2))
+        pygame.display.update()
+        
+        events = pygame.event.get()
+        for event in events:
+            if event.type == pygame.QUIT:
+                pygame.quit()
+            if event.type == pygame.KEYDOWN:
+                self.run()
+
+    
+    def show_dead_menu(self):
+        image1 = GAME_OVER
+        image2 = RESTART
+        self.screen.fill((255, 255, 255))
+        self.screen.blit(image1, (self.screen.get_width()/2 - image1.get_width()/2, 
+                            self.screen.get_height()/2 - image1.get_height()/2))
+        self.screen.blit(image2, (self.screen.get_width()/2 - image2.get_width()/2, 
+                            self.screen.get_height()/2-50 - image2.get_height()/2))
+
+        label = self.font.render(f"Deaths: {self.died_count}", 1, (0, 0, 0))
+        self.screen.blit(label, (self.screen.get_width()/2 - label.get_width()/2, 
+                            self.screen.get_height()/2+150 - label.get_height()/2 - 100))
+
+        pygame.display.update()
