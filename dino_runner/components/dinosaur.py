@@ -15,7 +15,6 @@ class Dinosaur(Sprite):
         self.dino_rect_x = 80
         self.dino_rect_y = 310
         self.step = 0
-        self.die_Sound = pygame.mixer.Sound(os.path.join(IMG_DIR, 'Sounds/Die.mp3'))
 
     def update(self, user_input):
         if user_input[pygame.K_DOWN] or user_input[pygame.K_s]:
@@ -101,4 +100,5 @@ class Dinosaur(Sprite):
         self.dino_rect_y = 345
     
     def dead(self):
+        pygame.mixer.Sound(os.path.join(IMG_DIR, 'Sounds/Die.mp3')).play
         self.image = DEAD

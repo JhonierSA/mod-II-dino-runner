@@ -32,11 +32,13 @@ class Game:
         self.hammer = Hammer()
         self.cactus = Cactus()
         self.heart = Heart()
-        self.upgrading = random.choice((self.hammer, self.shield))
-        self.obsta = random.choice((self.cactus, self.bird, self.heart))
+        self.upgrading = random.choice((self.hammer, self.shield, self.heart))
+        self.obsta = random.choice((self.cactus, self.bird))
         self.text = 0
         self.obj_points = 0
         self.points_Sound = pygame.mixer.Sound(os.path.join(IMG_DIR, 'Sounds/Points.mp3'))
+        self.obsta_rect = pygame.Rect(self.obstacle().rect_x, self.obstacle().rect_y, self.obstacle().image.get_width(), self.obstacle().image.get_height())
+        self.player_rect = pygame.Rect(self.player.dino_rect_x, self.player.dino_rect_y, self.player.image.get_width(), self.player.image.get_height())
 
     def run(self):
         # Game loop: events - update - draw
@@ -59,9 +61,11 @@ class Game:
         self.obstacle().update()
         self.upgrade().update()
         self.player.update(user_input)
-        # if not self.player.dino_rect.colliderect(self.obstacle().rect):
-        #     self.game_over()
-
+        self.player_rect = pygame.Rect(self.player.dino_rect_x, self.player.dino_rect_y, self.player.image.get_width(), self.player.image.get_height())
+        self.obsta_rect = pygame.Rect(self.obstacle().rect_x, self.obstacle().rect_y, self.obstacle().image.get_width(), self.obstacle().image.get_height())
+        if self.player_rect.colliderect(self.obsta_rect):
+            self.game_over()
+        
     def draw(self):
         self.clock.tick(FPS + self.fps)
         self.screen.fill((255, 255, 255))
@@ -95,14 +99,9 @@ class Game:
         self.screen.blit(self.text, (960, 10))
     
     def obstacle(self):
-        if self.obsta == self.cactus:
-            if self.obsta.cactus_rect_x <= -100:
+        if self.obsta.rect_x <= -100:
                 self.obsta = random.choice((self.cactus, self.bird))
-            return self.obsta
-        elif self.obsta == self.bird:
-            if self.obsta.bird_rect_x <= -100:
-                self.obsta = random.choice((self.cactus, self.bird))
-            return self.obsta
+                return self.obsta
         else:
             return self.obsta
     
@@ -125,6 +124,6 @@ class Game:
         else:
             return self.upgrading
 
-    # def game_over(self):
-    #         print(f"Player: {self.player.dino_rect}\nObstacle: {self.obstacle().rect}")
-    #         self.player.dead()
+    def game_over(self):
+            print(f"Player: {self.player_rect}\nObstacle: {self.obsta_rect}")
+            self.player.dead()
