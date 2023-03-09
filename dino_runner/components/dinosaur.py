@@ -9,13 +9,12 @@ class Dinosaur(Sprite):
         self.jump_speed = 30    # Velocidad inicial de salto
         self.gravity = 2        # Gravedad aplicada.
         self.y_velocity = 0     # Velocidad actual.
-        self.shield = False
+        self.shield = True
         self.hammer = False
         self.dino_rect = self.image.get_rect()
         self.dino_rect_x = 80
         self.dino_rect_y = 310
         self.step = 0
-        self.rect = pygame.Rect(self.dino_rect_x, self.dino_rect_y, self.image.get_width(), self.image.get_height())
         self.die_Sound = pygame.mixer.Sound(os.path.join(IMG_DIR, 'Sounds/Die.mp3'))
 
     def update(self, user_input):

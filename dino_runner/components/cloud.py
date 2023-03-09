@@ -9,12 +9,11 @@ class Clouds(Sprite):
         self.num_clouds = 4
         for cloud in range(self.num_clouds):
             cloud = {}
-            cloud["image"] = CLOUD   
-            cloud["y_velocity"] = 3     
+            cloud["image"] = CLOUD      
             cloud["cloud_rect"] = cloud["image"].get_rect()
             cloud["cloud_rect_x"] = 1200
             cloud["cloud_rect_y"] = random.choice((170, 180, 190, 150, 160, 130, 100, 80))
-            cloud["distance_rect_y"] = random.choice((200, 300, 400, 500, 600, 700, 800, 900))
+            cloud["distance_rect_x"] = random.choice((200, 300, 400, 500, 600, 700, 800, 900))
             self.clouds.append(cloud)
 
     def update(self):
@@ -30,18 +29,17 @@ class Clouds(Sprite):
             self.clouds = []
             for cloud in range(self.num_clouds):
                 cloud = {}
-                cloud["image"] = CLOUD   
-                cloud["y_velocity"] = 3     
+                cloud["image"] = CLOUD       
                 cloud["cloud_rect"] = cloud["image"].get_rect()
                 cloud["cloud_rect_x"] = 1200
                 cloud["cloud_rect_y"] = random.choice((170, 180, 190, 150, 160, 130, 100, 80))
-                cloud["distance_rect_y"] = random.choice((200, 300, 400, 500, 600, 700, 800, 900))
+                cloud["distance_rect_x"] = random.choice((200, 300, 400, 500, 600, 700, 800, 900))
                 self.clouds.append(cloud)
         
         else:
             for x in range(0,4):
                 if x >= 1:
-                    if self.clouds[x]["cloud_rect_x"] - self.clouds[x-1]["cloud_rect_x"] >= self.clouds[x-1]["distance_rect_y"]:
+                    if self.clouds[x]["cloud_rect_x"] - self.clouds[x-1]["cloud_rect_x"] >= self.clouds[x-1]["distance_rect_x"]:
                         self.clouds[x]["cloud_rect_x"] -= self.y_velocity
                         self.clouds[0]["cloud_rect_x"] -= self.y_velocity
                     else:

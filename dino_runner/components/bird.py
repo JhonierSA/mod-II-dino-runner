@@ -8,11 +8,10 @@ class Birds(Sprite):
         self.image = BIRD[1]
         self.step = 0       
         self.y_velocity = FPS / (3/2)   
-        self.bird_rect = self.image.get_rect()
+        self.rect = self.image.get_rect()
         self.bird_rect_x = 1200
         self.bird_rect_y = 100
         self.random_choise = True
-        self.rect = pygame.Rect(self.bird_rect_x, self.bird_rect_y, self.image.get_width(), self.image.get_height())
         
     def update(self):
         self.fly()
@@ -32,6 +31,6 @@ class Birds(Sprite):
             self.random_choise = True
 
         self.image = BIRD[0] if self.step < 6 else BIRD[1]
-        self.bird_rect = self.image.get_rect()
+        self.rect = self.image.get_rect()
         self.bird_rect_x -= self.y_velocity
         

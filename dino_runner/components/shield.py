@@ -1,4 +1,3 @@
-import pygame
 from dino_runner.utils.constants import SHIELD, FPS
 import random
 from pygame.sprite import Sprite
@@ -11,7 +10,6 @@ class Shield(Sprite):
         self.shield_rect_x = 10000
         self.shield_rect_y = 100
         self.random_choise = True
-        self.rect = pygame.Rect(self.shield_rect_x, self.shield_rect_y, self.image.get_width(), self.image.get_height())
         
     def update(self):
         self.appear()
@@ -27,6 +25,5 @@ class Shield(Sprite):
             self.shield_rect_x = 10000
             self.random_choise = True
 
-        self.image = SHIELD
         self.shield_rect = self.image.get_rect()
         self.shield_rect_x -= self.y_velocity

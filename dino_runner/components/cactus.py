@@ -7,11 +7,10 @@ class Cactus(Sprite):
     def __init__(self):
         self.image = random.choice((LARGE_CACTUS[0], LARGE_CACTUS[1], LARGE_CACTUS[2], SMALL_CACTUS[0], SMALL_CACTUS[1], SMALL_CACTUS[2]))
         self.y_velocity = FPS / (3/2)     
-        self.cactus_rect = self.image.get_rect()
+        self.rect = self.image.get_rect()
         self.cactus_rect_x = 1200
         self.cactus_rect_y = 305 if self.image == LARGE_CACTUS[0] or self.image == LARGE_CACTUS[1] or self.image == LARGE_CACTUS[2] else 330
         self.random_choise = True
-        self.rect = pygame.Rect(self.cactus_rect_x, self.cactus_rect_y, self.image.get_width(), self.image.get_height())
         
     def update(self):
         self.appear()
@@ -29,5 +28,5 @@ class Cactus(Sprite):
             self.random_choise = True
 
         self.image = self.image
-        self.cactus_rect = self.image.get_rect()
+        self.rect = self.image.get_rect()
         self.cactus_rect_x -= self.y_velocity

@@ -5,6 +5,7 @@ from dino_runner.components.cloud import Clouds
 from dino_runner.components.dinosaur import Dinosaur
 from dino_runner.components.bird import Birds
 from dino_runner.components.hammer import Hammer
+from dino_runner.components.heart import Heart
 from dino_runner.components.shield import Shield
 from dino_runner.components.cactus import Cactus
 
@@ -30,8 +31,9 @@ class Game:
         self.shield = Shield()
         self.hammer = Hammer()
         self.cactus = Cactus()
+        self.heart = Heart()
         self.upgrading = random.choice((self.hammer, self.shield))
-        self.obsta = random.choice((self.cactus, self.bird))
+        self.obsta = random.choice((self.cactus, self.bird, self.heart))
         self.text = 0
         self.obj_points = 0
         self.points_Sound = pygame.mixer.Sound(os.path.join(IMG_DIR, 'Sounds/Points.mp3'))
@@ -43,7 +45,6 @@ class Game:
             self.events()
             self.update()
             self.draw()
-            self.game_over()
             self.score()
         pygame.quit()
 
@@ -58,6 +59,8 @@ class Game:
         self.obstacle().update()
         self.upgrade().update()
         self.player.update(user_input)
+        # if not self.player.dino_rect.colliderect(self.obstacle().rect):
+        #     self.game_over()
 
     def draw(self):
         self.clock.tick(FPS + self.fps)
@@ -106,17 +109,22 @@ class Game:
     def upgrade(self):
         if self.upgrading == self.hammer:
             if self.upgrading.hammer_rect_x <= -100:
-                self.upgrading = random.choice((self.hammer, self.shield))
+                self.upgrading = random.choice((self.hammer, self.shield, self.heart))
             return self.upgrading
+        
         elif self.upgrading == self.shield:
             if self.upgrading.shield_rect_x <= -100:
-                self.upgrading = random.choice((self.hammer, self.shield))
+                self.upgrading = random.choice((self.hammer, self.shield, self.heart))
             return self.upgrading
+        
+        elif self.upgrading == self.heart:
+            if self.upgrading.heart_rect_x <= -100:
+                self.upgrading = random.choice((self.hammer, self.heart, self.heart))
+            return self.upgrading
+        
         else:
             return self.upgrading
-    
-    def game_over(self):
-        if self.player.rect.colliderect(self.obstacle().rect):
-            self.player.dead()
-            print("Game Over")
-            self.playing = False
+
+    # def game_over(self):
+    #         print(f"Player: {self.player.dino_rect}\nObstacle: {self.obstacle().rect}")
+    #         self.player.dead()
