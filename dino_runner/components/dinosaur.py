@@ -103,5 +103,4 @@ class Dinosaur(Sprite):
     def dead(self):
         if self.dino_rect_y == 345:
             self.dino_rect_y = 310
-        pygame.mixer.Sound(os.path.join(IMG_DIR, 'Sounds/Die.mp3')).play()
         self.image = DEAD
