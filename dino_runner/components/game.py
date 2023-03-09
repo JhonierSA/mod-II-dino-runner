@@ -9,7 +9,7 @@ from dino_runner.components.heart import Heart
 from dino_runner.components.shield import Shield
 from dino_runner.components.cactus import Cactus
 
-from dino_runner.utils.constants import BG, ICON, IMG_DIR, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS
+from dino_runner.utils.constants import BG, GAME_OVER, ICON, IMG_DIR, RESTART, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS
 
 
 class Game:
@@ -20,6 +20,8 @@ class Game:
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
         self.playing = False
+        self.player_died = False
+        self.died_count = 0
         self.game_speed = 20
         self.x_pos_bg = 0
         self.y_pos_bg = 380
@@ -39,6 +41,7 @@ class Game:
         self.points_Sound = pygame.mixer.Sound(os.path.join(IMG_DIR, 'Sounds/Points.mp3'))
         self.obsta_rect = pygame.Rect(self.obstacle().rect_x, self.obstacle().rect_y, self.obstacle().image.get_width(), self.obstacle().image.get_height())
         self.player_rect = pygame.Rect(self.player.dino_rect_x, self.player.dino_rect_y, self.player.image.get_width(), self.player.image.get_height())
+        self.upgrade_rect = pygame.Rect(self.upgrade().rect_x, self.upgrade().rect_y, self.upgrade().image.get_width(), self.upgrade().image.get_height())
 
     def run(self):
         # Game loop: events - update - draw
@@ -63,10 +66,14 @@ class Game:
         self.player.update(user_input)
         self.player_rect = pygame.Rect(self.player.dino_rect_x, self.player.dino_rect_y, self.player.image.get_width(), self.player.image.get_height())
         self.obsta_rect = pygame.Rect(self.obstacle().rect_x, self.obstacle().rect_y, self.obstacle().image.get_width(), self.obstacle().image.get_height())
-        if self.player_rect.colliderect(self.obsta_rect):
-            self.game_over()
+        self.upgrade_rect = pygame.Rect(self.upgrade().rect_x, self.upgrade().rect_y, self.upgrade().image.get_width(), self.upgrade().image.get_height())
         
     def draw(self):
+        self.dead()
+        if self.player_rect.colliderect(self.upgrade_rect):
+            self.upgrade().rect_x = -100
+            self.power_up()
+            self.player.draw(self.screen)
         self.clock.tick(FPS + self.fps)
         self.screen.fill((255, 255, 255))
         self.cloud.draw(self.screen)
@@ -106,24 +113,29 @@ class Game:
             return self.obsta
     
     def upgrade(self):
-        if self.upgrading == self.hammer:
-            if self.upgrading.hammer_rect_x <= -100:
-                self.upgrading = random.choice((self.hammer, self.shield, self.heart))
+        if self.upgrading.rect_x <= -100:
+            self.upgrading = random.choice((self.hammer, self.shield, self.heart))
             return self.upgrading
-        
-        elif self.upgrading == self.shield:
-            if self.upgrading.shield_rect_x <= -100:
-                self.upgrading = random.choice((self.hammer, self.shield, self.heart))
-            return self.upgrading
-        
-        elif self.upgrading == self.heart:
-            if self.upgrading.heart_rect_x <= -100:
-                self.upgrading = random.choice((self.hammer, self.heart, self.heart))
-            return self.upgrading
-        
-        else:
+        else: 
             return self.upgrading
 
-    def game_over(self):
-            print(f"Player: {self.player_rect}\nObstacle: {self.obsta_rect}")
-            self.player.dead()
+    def power_up(self):
+        if self.upgrade() == self.hammer:
+            self.player.shield = False
+            self.player.hammer = True
+        elif self.upgrade() == self.shield:
+            self.player.hammer = False
+            self.player.shield = True
+        elif self.upgrade() == self.heart:
+            self.player.lifes += 1
+    
+    def dead(self):
+        if self.player_rect.colliderect(self.obsta_rect):
+            if self.player.shield == True:
+                print("Te has protegido")
+                self.player.shield = False
+            else:
+                self.player.dead()
+                self.player_died = True
+                self.died_count += 1
+    

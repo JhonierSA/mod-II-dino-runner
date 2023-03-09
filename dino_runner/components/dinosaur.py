@@ -9,12 +9,13 @@ class Dinosaur(Sprite):
         self.jump_speed = 30    # Velocidad inicial de salto
         self.gravity = 2        # Gravedad aplicada.
         self.y_velocity = 0     # Velocidad actual.
-        self.shield = True
+        self.shield = False
         self.hammer = False
         self.dino_rect = self.image.get_rect()
         self.dino_rect_x = 80
         self.dino_rect_y = 310
         self.step = 0
+        self.lifes = 0
 
     def update(self, user_input):
         if user_input[pygame.K_DOWN] or user_input[pygame.K_s]:
@@ -100,5 +101,7 @@ class Dinosaur(Sprite):
         self.dino_rect_y = 345
     
     def dead(self):
-        pygame.mixer.Sound(os.path.join(IMG_DIR, 'Sounds/Die.mp3')).play
+        if self.dino_rect_y == 345:
+            self.dino_rect_y = 310
+        pygame.mixer.Sound(os.path.join(IMG_DIR, 'Sounds/Die.mp3')).play()
         self.image = DEAD
