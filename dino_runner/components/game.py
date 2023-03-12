@@ -25,6 +25,7 @@ class Game:
         self.died_count = 0
         self.game_speed = 20
         self.x_pos_bg = 0
+        self.collition = 0
         self.y_pos_bg = 380
         self.points = 0
         self.fps = 0
@@ -145,19 +146,23 @@ class Game:
     
     def dead(self):
         if self.player_rect.colliderect(self.obsta_rect):
-            if self.player.shield == True:
-                print("Te has protegido")
-                self.player.shield = False
-            elif self.player.lifes > 1:
-                self.player.lifes -= 1
-            else:
-                pygame.mixer.Sound(os.path.join(IMG_DIR, 'Sounds/Die.mp3')).play()
-                if self.player_died:
-                    self.player.dead()
-                self.player_died = True
-                self.died_count += 1
-                self.player.draw(self.screen)
-                self.playing = False
+            if self.collition == 0:
+                if self.player.shield == True:
+                    print("Te has protegido")
+                    self.player.shield = False
+                elif self.player.lifes > 1:
+                    self.player.lifes -= 1
+                else:
+                    pygame.mixer.Sound(os.path.join(IMG_DIR, 'Sounds/Die.mp3')).play()
+                    if self.player_died:
+                        self.player.dead()
+                    self.player_died = True
+                    self.died_count += 1
+                    self.player.draw(self.screen)
+                    self.playing = False
+                self.collition += 1
+        elif self.obstacle().rect_x <= 0:
+            self.collition = 0
     
     def show_start_menu(self):
         image = ICON
